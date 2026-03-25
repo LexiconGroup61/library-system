@@ -2,6 +2,8 @@
 Microsoft Visual Studio Solution File, Format Version 12.00
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Catalogue", "Catalogue\Catalogue.csproj", "{21E92877-FE24-4D0E-8052-AB3542AD69E5}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CatalogueTests", "CatalogueTests\CatalogueTests.csproj", "{3A7D2F3F-DBA2-4CD2-B113-8EAF611C1D15}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -12,5 +14,9 @@ Global
 		{21E92877-FE24-4D0E-8052-AB3542AD69E5}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{21E92877-FE24-4D0E-8052-AB3542AD69E5}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{21E92877-FE24-4D0E-8052-AB3542AD69E5}.Release|Any CPU.Build.0 = Release|Any CPU
+		{3A7D2F3F-DBA2-4CD2-B113-8EAF611C1D15}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3A7D2F3F-DBA2-4CD2-B113-8EAF611C1D15}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3A7D2F3F-DBA2-4CD2-B113-8EAF611C1D15}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3A7D2F3F-DBA2-4CD2-B113-8EAF611C1D15}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal

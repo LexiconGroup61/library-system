@@ -3,6 +3,58 @@
 using System.Globalization;
 using Catalogue;
 
+Post tryPost = new Post();
+
+try
+{
+    Console.WriteLine(tryPost.ReturnNumber());
+}
+catch (Exception ex)
+{
+    Console.WriteLine(ex.Message);
+}
+
+
+Console.ReadLine();
+
+
+int tryNumber;
+try
+{
+    Console.WriteLine(int.MaxValue);
+    string tryEntry = Console.ReadLine();
+    tryNumber = int.Parse(tryEntry);
+}
+catch (FormatException format)
+{
+    Console.WriteLine(format.Message);
+}
+catch (OverflowException overflow)
+{
+    Console.WriteLine(overflow.Message);
+}
+catch (Exception ex)
+{
+    Console.WriteLine(ex.Message + " (General message)");
+}
+
+
+
+string entry = Console.ReadLine();
+
+bool parseTrialWorked = int.TryParse(entry, out int userNumber);
+
+if (parseTrialWorked)
+{
+    Console.WriteLine(userNumber + 10);
+}
+else
+{
+    Console.WriteLine("Number could not be converted");
+}
+
+Console.ReadLine();
+
 // Array
 
 string[] words = new []{"This", "Has", "Rules"};
