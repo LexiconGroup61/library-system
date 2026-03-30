@@ -2,6 +2,76 @@
 
 using System.Globalization;
 using Catalogue;
+using BenchmarkDotNet.Running;
+ 
+// BenchmarkRunner.Run<AlternativeDemo>();
+
+// Console.ReadLine();
+
+Post postFull = new Post();
+IPost postLimited = new Post();
+IPost altDemoLimited = new AlternativeDemo();
+
+postLimited.Id = 22;
+altDemoLimited.Id = 28;
+
+// postFull.ReturnNumber();
+// postLimited.ReturnNumber();
+
+List<IPost> iPosts = new List<IPost>();
+iPosts.Add(postLimited);
+iPosts.Add(altDemoLimited);
+
+foreach (var iPost in iPosts)
+{
+    Console.WriteLine(iPost.Id);
+}
+
+Console.ReadLine();
+
+
+RegexDemo.DemoPart();
+
+Console.ReadLine();
+
+
+Console.WriteLine(PerformanceDemo.DemoArrayPerformance());
+Console.WriteLine(PerformanceDemo.DemoListPerformance());
+
+Console.ReadLine();
+
+
+Dictionary<DateOnly, string> backup = new Dictionary<DateOnly, string>()
+{
+    { new DateOnly(2026, 3, 26), "Thursday" },
+    { new DateOnly(2026, 3, 25), "Wednesday" }
+};
+
+foreach (var item in backup)
+{
+    Console.WriteLine(item.Key + ": " + item.Value);
+}
+
+Console.ReadLine();
+
+
+Catalogue.Catalogue catalogue = new();
+
+string resultA = catalogue.AddNumbers(73, 75);
+Console.WriteLine(resultA);
+
+string resultB = catalogue.AddNumbers(73, 75);
+Console.WriteLine(resultB);
+
+Console.ReadLine();
+
+bool addWorked = catalogue.AddToPosts("Friday", 27);
+addWorked = catalogue.AddToPosts("Friday", 85);
+
+Console.WriteLine(addWorked);
+
+Console.ReadLine();
+
 
 Post tryPost = new Post();
 
