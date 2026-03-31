@@ -8,6 +8,15 @@ using BenchmarkDotNet.Running;
 
 // Console.ReadLine();
 
+CEO ceo = new CEO(new DateOnly(2018, 8, 23), 10000, "Sales");
+
+int valueReturned = ceo.FireEmployee();
+
+Console.WriteLine(valueReturned);
+
+Console.ReadLine();
+LoanPeriod loan = new LoanPeriod(new DateOnly(2026, 3, 31), new DateOnly(2026, 4, 13));
+
 Post postFull = new Post();
 IPost postLimited = new Post();
 IPost altDemoLimited = new AlternativeDemo();

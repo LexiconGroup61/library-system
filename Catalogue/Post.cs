@@ -2,7 +2,7 @@ namespace Catalogue;
 
 
 
-public class Post : IPost
+public class Post : IPost, IBookable
 {
     private string textSnippet;
     public int Id { get; set; }
@@ -33,6 +33,10 @@ public class Post : IPost
     {
         return sideA * sideB;
     }
-    
-    
+
+
+    public bool SetReturnDate(int days)
+    {
+        throw new NotImplementedException();
+    }
 }
