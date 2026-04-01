@@ -15,4 +15,11 @@ public class CEO : Manager
     {
         SignAuthority = signAuthority;
     }
+    
+    public override decimal PaySalary()
+    {
+        // Add bonus + stock dividends
+        return 30000m + 12000m + 300000m;
+    }
+
 }

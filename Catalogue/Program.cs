@@ -8,6 +8,96 @@ using BenchmarkDotNet.Running;
 
 // Console.ReadLine();
 
+
+List<Employee> employees = new List<Employee>()
+{
+    new Manager(new DateOnly(2021, 1, 1), 45000, "Marketing"),
+    new Staff(new DateOnly(2011, 1, 1), 37000),
+    new CEO(new DateOnly(2026, 1, 1), 45000, "Legal"),
+};
+
+foreach (Employee employee in employees)
+{
+    Console.WriteLine(employee.PaySalary());
+}
+
+Console.ReadLine();
+
+foreach (Employee employee in employees)
+{
+    if (employee.GetType() == typeof(Staff))
+    {
+        Staff staff = employee as Staff;
+        decimal salary = staff.PaySalary();
+        Console.WriteLine(salary);
+    } else if (employee.GetType() == typeof(Manager))
+    {
+        Manager managerA = employee as Manager;
+        Console.WriteLine(managerA.PaySalary());
+    } else if (employee.GetType() == typeof(CEO))
+    {
+        CEO ceoA = employee as CEO;
+        Console.WriteLine(ceoA.PaySalary());
+    }
+    else
+    {
+        Console.WriteLine("I'm nothing");
+    }
+}
+
+Console.ReadLine();
+
+
+foreach (Employee employee in employees)
+{
+    if (employee.GetType() == typeof(Staff))
+    {
+        Console.WriteLine("I'm staff");
+    } else if (employee.GetType() == typeof(Manager))
+    {
+        Console.WriteLine("I'm manager");
+    } else if (employee.GetType() == typeof(CEO))
+    {
+        Console.WriteLine("I'm CEO");
+    }
+    else
+    {
+        Console.WriteLine("I'm nothing");
+    }
+}
+
+Console.ReadLine();
+
+Manager manager = new Manager(new DateOnly(2021, 1, 1), 45000, "Marketing");
+
+
+Employee justEmployee = manager as Employee;
+
+
+foreach (Employee employee in employees)
+{
+
+    Console.WriteLine(employee.GetType() == typeof(Manager));
+    
+    // if (employee is Manager)
+    // {
+    //     Manager manager = employee as Manager;
+    //     Console.WriteLine(manager.Department);
+    // }
+
+    // try
+    // {
+    //     Manager manager = employee as Manager;
+    //     Console.WriteLine(manager.Department);
+    // }
+    // catch (Exception ex)
+    // {
+    //     Console.WriteLine("Not a manager");
+    // }
+}
+
+Console.ReadLine();
+
 CEO ceo = new CEO(new DateOnly(2018, 8, 23), 10000, "Sales");
 
 int valueReturned = ceo.FireEmployee();

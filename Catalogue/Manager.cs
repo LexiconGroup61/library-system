@@ -8,6 +8,12 @@ public class Manager : Employee
     {
         Department = department;
     }
+
+    public override decimal PaySalary()
+    {
+        // Add bonus
+        return 30000m + 12000m;
+    }
     
     public new int FireEmployee()
     {

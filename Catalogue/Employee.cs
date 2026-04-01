@@ -11,6 +11,11 @@ public class Employee
         Salary = salary;
     }
 
+    public virtual decimal PaySalary()
+    {
+        return 30000m;
+    }
+    
     public string FireEmployee()
     {
         return "You have 3 months payment";
