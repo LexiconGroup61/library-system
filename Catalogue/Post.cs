@@ -19,9 +19,11 @@ public class Post : IPost, IBookable
         return int.Parse(number);
     }
 
-    public int ReturnNumber(int num)
+    public (Insect, bool) ReturnInsect(int num)
     {
-        throw new NotImplementedException();
+        Insect insect = new Insect();
+        insect.Legs = 8;
+        return (insect, true);
     }
 
     public decimal CalculateCost(decimal price)

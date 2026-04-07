@@ -8,6 +8,46 @@ using BenchmarkDotNet.Running;
 
 // Console.ReadLine();
 
+Notification emailNotifyer = new EmailNotification();
+Notification smsNotifyer = new SmsNotification();
+
+List<Notification> notifications = new List<Notification>()
+{
+    emailNotifyer,
+    smsNotifyer
+};
+
+string notificationPreference = Console.ReadLine();
+
+EmailNotification notifyer1 = emailNotifyer as EmailNotification;
+SmsNotification notifyer2 = smsNotifyer as SmsNotification;
+
+switch (notificationPreference)
+{
+    case "Email" :
+        Console.WriteLine(notifyer1.Message());
+        break;
+    case "Sms":
+        Console.WriteLine(notifyer2.Message());
+        break;
+    default:
+        Console.WriteLine("No message sent");
+        break;
+}
+
+Console.ReadLine();
+
+Post postTuple = new Post();
+
+(Insect insect, bool success) insectTuple = postTuple.ReturnInsect(5);
+
+int legs = insectTuple.insect.Legs;
+Console.WriteLine(legs);
+
+(Insect insectAlternative, bool successAlternative) = postTuple.ReturnInsect(5);
+
+Console.WriteLine(insectAlternative.Legs);
+Console.ReadLine();
 
 List<Employee> employees = new List<Employee>()
 {
