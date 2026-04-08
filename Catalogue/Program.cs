@@ -1,12 +1,64 @@
 ﻿// See https://aka.ms/new-console-template for more information
 
 using System.Globalization;
+using System.Text.Json;
 using Catalogue;
 using BenchmarkDotNet.Running;
  
 // BenchmarkRunner.Run<AlternativeDemo>();
 
 // Console.ReadLine();
+
+string companyData1 = File
+    .ReadAllText("/Users/tobiasengberg/Downloads/Library/Catalogue/companies1.json");
+List<Company> companies1 =
+    JsonSerializer
+        .Deserialize<List<Company>>(companyData1);
+
+string companyData2 = File
+    .ReadAllText("/Users/tobiasengberg/Downloads/Library/Catalogue/companies2.json");
+List<Company> companies2 =
+    JsonSerializer
+        .Deserialize<List<Company>>(companyData1);
+
+List<Company> sorted = companies1
+    .OrderByDescending(c => c.employees)
+    .Take(5)
+    .ToList();
+
+List<Company> basic = companies1
+    .Where(c => c.revenue < 0)
+    .ToList();
+
+List<string> basicSelect = companies1
+    .OrderBy(c => c.revenue)
+    .Select(c => new Insect(c.employees, true))
+    .ToList()
+    .Where(i => i.Legs > 14)
+    .Select(i => $"Has {i.Legs} legs")
+    .ToList();
+
+List<Company> unionedList = companies1
+    .Intersect(companies2)
+
+    .ToList();
+
+foreach (var c in unionedList)
+{
+    Console.WriteLine($"{c.id}, \t{c.employees}, \t{c.revenue}, \t{c.industryid}, \t{c.name}");
+}
+
+foreach (string insect in basicSelect)
+{
+    Console.WriteLine(insect);
+}
+
+foreach (var c in basic)
+{
+    Console.WriteLine($"{c.id}, \t{c.employees}, \t{c.revenue}, \t{c.industryid}, \t{c.name}");
+}
+
+Console.ReadLine();
 
 Notification emailNotifyer = new EmailNotification();
 Notification smsNotifyer = new SmsNotification();
