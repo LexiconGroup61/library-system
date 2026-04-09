@@ -5,7 +5,9 @@ namespace Catalogue;
 public class Post : IPost, IBookable
 {
     private string textSnippet;
+    public Publisher Publisher { get; set; }
     public int Id { get; set; }
+    
     public int ReturnNumber()
     {
         throw new NotImplementedException();
@@ -17,13 +19,6 @@ public class Post : IPost, IBookable
     {
         string number = Console.ReadLine();
         return int.Parse(number);
-    }
-
-    public (Insect, bool) ReturnInsect(int num)
-    {
-        Insect insect = new Insect();
-        insect.Legs = 8;
-        return (insect, true);
     }
 
     public decimal CalculateCost(decimal price)
