@@ -2,18 +2,31 @@ namespace Catalogue;
 
 
 
-public class Post : IPost, IBookable
+public class Post
 {
-    private string textSnippet;
-    public Publisher Publisher { get; set; }
     public int Id { get; set; }
-    
+
+    public string? Title { get; set; }
+    public string? Author { get; set; }
+    public string? Publisher { get; set; }
+    public int Year { get; set; }
+
+    public Post()
+    {
+        
+    }
+
+    public Post(string author, string title, string publisher, int year)
+    {
+        Author = author;
+        Title = title;
+        Publisher = publisher;
+        Year = year;
+    }
     public int ReturnNumber()
     {
         throw new NotImplementedException();
     }
-
-    public string Title { get; set; }
 
     public int ReturnNumber(string text, int notUsed)
     {
