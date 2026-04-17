@@ -24,4 +24,8 @@
       <ProjectReference Include="..\Catalogue\Catalogue.csproj" />
     </ItemGroup>
 
+    <ItemGroup>
+      <Folder Include="wwwroot\img\" />
+    </ItemGroup>
+
 </Project>

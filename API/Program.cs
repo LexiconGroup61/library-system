@@ -1,5 +1,8 @@
 using API.Data;
+using API.Repositories;
+using API.Repositories.Interfaces;
 using Catalogue;
+using Catalogue.Services;
 using Microsoft.EntityFrameworkCore;
 
 WebApplicationBuilder builder = WebApplication.CreateBuilder(args);
@@ -8,6 +11,8 @@ builder.Services.AddAuthorization();
 
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
+
+builder.Services.AddScoped<ICatalogueRepository, CatalogueRepository>();
 
 builder.Services.AddDbContext<LibraryDbContext>(options =>
     options.UseSqlite("Data Source=librarydatabase"));
@@ -19,6 +24,7 @@ if (app.Environment.IsDevelopment())
     app.UseSwaggerUI();
 }
 
+app.UseStaticFiles();
 
 app.UseAuthentication();
 app.UseAuthorization();
@@ -59,5 +65,24 @@ app.MapGet("/news", () =>
 app.MapGet("/about/{text}/{number}", (string text, int number) => $"A site for code – {text} {number}");
 
 app.MapGet("/", () => "Hello World!");
+
+app.MapGet("home/privacy", () =>
+{
+
+});
+
+app.Use(async (context, next) =>
+{
+    Console.WriteLine("First action above");
+    await next.Invoke(context);
+    Console.WriteLine("First action below");
+});
+
+app.Use(async (context, next) =>
+{
+    Console.WriteLine("Second action above");
+    await next.Invoke(context);
+    Console.WriteLine("Second action below");
+});
 
 app.Run();
