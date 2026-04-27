@@ -5,4 +5,7 @@ using System.Text.Json;
 using Catalogue;
 
 
+Folio newFolio = new Folio("Restraints", 56);
+
+newFolio.PageCount();
 Console.ReadLine();

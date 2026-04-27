@@ -11,4 +11,7 @@ public class LibraryDbContext : DbContext
     }
 
     public DbSet<Post> Posts { get; set; }
+    public DbSet<Author> Authors { get; set; }
+    public DbSet<Book> Books { get; set; }
+    public DbSet<PublicationDate> PublicationDates { get; set; }
 }

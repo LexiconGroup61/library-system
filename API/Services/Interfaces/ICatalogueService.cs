@@ -3,5 +3,5 @@ using Catalogue;
 
 public interface ICatalogueService
 {
-    Catalogue GetSorted();
+    Directory GetSorted();
 }

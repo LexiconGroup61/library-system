@@ -23,7 +23,7 @@ public class CatalogueService : ICatalogueService
         _repository.ReadAll();
     }
     
-    public Catalogue.Catalogue GetSorted()
+    public Catalogue.Directory GetSorted()
     {
         throw new NotImplementedException();
     }

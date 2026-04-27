@@ -3,5 +3,5 @@ using Catalogue;
 
 public interface ICatalogueRepository
 {
-    Catalogue ReadAll();
+    Directory ReadAll();
 }

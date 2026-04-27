@@ -10,14 +10,25 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace API.Migrations
 {
     [DbContext(typeof(LibraryDbContext))]
-    [Migration("20260413121831_initialCreate")]
-    partial class initialCreate
+    [Migration("20260420072952_InitialCreate")]
+    partial class InitialCreate
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder.HasAnnotation("ProductVersion", "10.0.5");
+
+            modelBuilder.Entity("Catalogue.Catalogue", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("INTEGER");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Catalogue");
+                });
 
             modelBuilder.Entity("Catalogue.Post", b =>
                 {
@@ -27,6 +38,9 @@ namespace API.Migrations
 
                     b.Property<string>("Author")
                         .HasColumnType("TEXT");
+
+                    b.Property<int>("CatalogueId")
+                        .HasColumnType("INTEGER");
 
                     b.Property<string>("Publisher")
                         .HasColumnType("TEXT");
@@ -39,7 +53,27 @@ namespace API.Migrations
 
                     b.HasKey("Id");
 
+                    b.HasIndex("CatalogueId")
+                        .IsUnique();
+
                     b.ToTable("Posts");
+                });
+
+            modelBuilder.Entity("Catalogue.Post", b =>
+                {
+                    b.HasOne("Catalogue.Catalogue", "Catalogue")
+                        .WithOne("Post")
+                        .HasForeignKey("Catalogue.Post", "CatalogueId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Catalogue");
+                });
+
+            modelBuilder.Entity("Catalogue.Catalogue", b =>
+                {
+                    b.Navigation("Post")
+                        .IsRequired();
                 });
 #pragma warning restore 612, 618
         }

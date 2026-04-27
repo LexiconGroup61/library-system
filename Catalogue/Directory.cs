@@ -1,10 +1,13 @@
 namespace Catalogue;
 
-public class Catalogue
+public class Directory
 {
+    public int Id { get; set; }
     private Dictionary<string, int> posts { get; set; } = new Dictionary<string, int>();
     private Dictionary<string, int> calculations { get; set; } = new Dictionary<string, int>();
 
+    public Post Post { get; set; }
+    
     public bool AddToPosts(string text, int number)
     {
         if (posts.ContainsKey(text))
