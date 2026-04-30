@@ -15,7 +15,8 @@ public class AuthorController(LibraryDbContext db) : ControllerBase
     public async Task<ActionResult> Index()
     {
         string session = Console.ReadLine() ?? "y";
-
+        string[]? caseTwo = Console.ReadLine()?.Split(" ");
+        
         session.MakeUpperCase();
         List<Author> authors = await db.Authors.ToListAsync();
         return Ok("Thing added");
