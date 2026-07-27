@@ -1,4 +1,5 @@
 using Application.Data;
+using Application.Models;
 using Application.Services.Interfaces;
 using Catalogue;
 using Microsoft.AspNetCore.Mvc;
@@ -9,15 +10,17 @@ public static class WebApplicationExtensions
 {
     public static void MapEndpoints(this WebApplication app)
     {
-        app.MapGet("/post", ([FromBody]PostDto newPost, LibraryDbContext db) =>
+        app.MapGet("/post", ([FromBody]PostDto newPost, LibraryDbContext db, HttpContext context) =>
         {
+            context.Session.GetString("key");
             db.Posts.Add(new Post(newPost));
             db.SaveChanges();
             return "Author added";
         });
 
-        app.MapPost("/fake", (PostDto dto) =>
+        app.MapPost("/fake", (PostDto dto, HttpContext context) =>
         {
+            context.Session.SetString("key", "value");
             if (dto.Year > 2022)
             {
                 return Results.BadRequest();
@@ -34,6 +37,12 @@ public static class WebApplicationExtensions
             return "Author added";
         });
 
+        app.MapPost("/form", (HttpRequest request) =>
+        {
+            Console.WriteLine(request.Form["message"]);
+            request.Form.Keys.ToList().ForEach(key => Console.WriteLine(key + " " + request.Form[key]));
+        });
+        
         app.MapPost("/adddate", (int days, LibraryDbContext db) =>
         {
             PublicationDate date = new PublicationDate();
@@ -74,6 +83,11 @@ public static class WebApplicationExtensions
             return "Deleted";
         });
 
+        app.MapPost("/title", (Temporary temp) =>
+        {
+            return $"The title is {temp.Title}";
+        });
+        
         app.MapGet("/news", (string topic, string category) =>
         {
             string newStuff = "Old stuff" + " and new stuff";
@@ -86,8 +100,8 @@ public static class WebApplicationExtensions
 
         app.MapGet("home/privacy", () =>
         {
-
-        });
+            return "Privacy enabled";
+        }).RequireAuthorization();
     }
 
     public static void UseCustomMiddleware(this WebApplication app)

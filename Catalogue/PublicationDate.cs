@@ -4,5 +4,6 @@ public class PublicationDate
 {
     public int Id { get; set; }
     public DateOnly Published { get; set; }
-    public Book? BookId { get; set; }
+    public int BookId { get; set; }
+    public Book Book { get; set; } = null!;
 }
