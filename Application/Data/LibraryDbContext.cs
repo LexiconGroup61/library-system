@@ -1,3 +1,4 @@
+using Application.Models;
 using Catalogue;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
@@ -5,7 +6,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Application.Data;
 
-public class LibraryDbContext : IdentityDbContext<IdentityUser>
+public class LibraryDbContext : IdentityDbContext<LibraryUser>
 {
     public LibraryDbContext(DbContextOptions<LibraryDbContext> options) : base(options)
     {

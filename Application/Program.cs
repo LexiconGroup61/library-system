@@ -1,5 +1,6 @@
 using Application;
 using Application.Data;
+using Application.Models;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 
@@ -20,7 +21,7 @@ builder.Services.AddControllers();
 builder.RegisterDependencyInjections();
 builder.Services.AddDbContext<LibraryDbContext>(options =>
     options.UseSqlite("Data Source=librarydatabase"));
-builder.Services.AddIdentityApiEndpoints<IdentityUser>()
+builder.Services.AddIdentityApiEndpoints<LibraryUser>()
     .AddEntityFrameworkStores<LibraryDbContext>();
 WebApplication app = builder.Build();
 
@@ -35,7 +36,7 @@ app.UseCors("lib-front");
 app.UseSession();
 app.UseAuthentication();
 app.UseAuthorization();
-app.MapGroup("/user").MapIdentityApi<IdentityUser>();
+app.MapGroup("/user").MapIdentityApi<LibraryUser>();
 app.MapEndpoints();
 app.MapControllers();
 app.UseCustomMiddleware();
