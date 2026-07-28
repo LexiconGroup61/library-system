@@ -2,6 +2,7 @@ namespace Catalogue;
 
 public class Catalogue
 {
+    public int Id { get; set; }
     private Dictionary<string, int> posts { get; set; } = new Dictionary<string, int>();
     private Dictionary<string, int> calculations { get; set; } = new Dictionary<string, int>();
 
