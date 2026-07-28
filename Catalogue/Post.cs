@@ -1,3 +1,5 @@
+using System.ComponentModel.DataAnnotations;
+
 namespace Catalogue;
 
 
@@ -5,7 +7,6 @@ namespace Catalogue;
 public class Post
 {
     public int Id { get; set; }
-
     public string? Title { get; set; }
     public string? Author { get; set; }
     public string? Publisher { get; set; }
@@ -13,11 +14,25 @@ public class Post
     
     
 
+    public int DirectoryId { get; set; }
+    public Directory Directory { get; set; }
+
+
+    
     public Post()
     {
         
     }
 
+    public Post(PostDto dto)
+    {
+        Author = dto.Author;
+        Title = dto.Title;
+        Publisher = dto.Publisher;
+        Year = dto.Year;
+        DirectoryId = 1;
+    }
+    
     public Post(string author, string title, string publisher, int year)
     {
         Author = author;
