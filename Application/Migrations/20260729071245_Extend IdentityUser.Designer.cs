@@ -3,6 +3,7 @@ using System;
 using Application.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -10,9 +11,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Application.Migrations
 {
     [DbContext(typeof(LibraryDbContext))]
-    partial class LibraryDbContextModelSnapshot : ModelSnapshot
+    [Migration("20260729071245_Extend IdentityUser")]
+    partial class ExtendIdentityUser
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder.HasAnnotation("ProductVersion", "10.0.10");
@@ -129,16 +132,11 @@ namespace Application.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("INTEGER");
 
-                    b.Property<string>("LibraryUserId")
-                        .HasColumnType("TEXT");
-
                     b.Property<string>("Title")
                         .IsRequired()
                         .HasColumnType("TEXT");
 
                     b.HasKey("Id");
-
-                    b.HasIndex("LibraryUserId");
 
                     b.ToTable("Books");
                 });
@@ -351,13 +349,6 @@ namespace Application.Migrations
                         .IsRequired();
                 });
 
-            modelBuilder.Entity("Catalogue.Book", b =>
-                {
-                    b.HasOne("Application.Models.LibraryUser", null)
-                        .WithMany("Books")
-                        .HasForeignKey("LibraryUserId");
-                });
-
             modelBuilder.Entity("Catalogue.Post", b =>
                 {
                     b.HasOne("Catalogue.Author", null)
@@ -433,11 +424,6 @@ namespace Application.Migrations
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
-                });
-
-            modelBuilder.Entity("Application.Models.LibraryUser", b =>
-                {
-                    b.Navigation("Books");
                 });
 
             modelBuilder.Entity("Catalogue.Author", b =>

@@ -1,7 +1,9 @@
+using System.Security.Claims;
 using Application.Data;
 using Application.Models;
 using Application.Services.Interfaces;
 using Catalogue;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Application;
@@ -10,6 +12,17 @@ public static class WebApplicationExtensions
 {
     public static void MapEndpoints(this WebApplication app)
     {
+
+        app.MapPost("/user/logout", async (SignInManager<LibraryUser> signInManager, [FromBody] Object empty) =>
+            {
+                if (empty != null)
+                {
+                    await signInManager.SignOutAsync();
+                    return Results.Ok();
+                }
+                return Results.Unauthorized();
+            })
+            .RequireAuthorization();
         app.MapGet("/post", ([FromBody]PostDto newPost, LibraryDbContext db, HttpContext context) =>
         {
             context.Session.GetString("key");
@@ -94,6 +107,40 @@ public static class WebApplicationExtensions
             return newStuff;
         });
 
+        app.MapGet("/savedbooks", (
+                LibraryDbContext db,
+                HttpContext context,
+                UserManager<LibraryUser> manager
+            ) =>
+            {
+                var userId = manager.GetUserId(context.User);
+
+                var user = db.LibraryUsers
+                    .SingleOrDefault(u => u.Id == userId);
+                var books = user?.Books;
+                return Results.Ok(books);
+            })
+            .RequireAuthorization();
+        app.MapPost("/addbook", (
+                [FromBody] Book book,
+                LibraryDbContext db,
+                HttpContext context,
+                UserManager<LibraryUser> manager
+            ) =>
+            {
+                var userId = manager.GetUserId(context.User);
+
+                var user = db.LibraryUsers
+                    .SingleOrDefault(u => u.Id == userId);
+                    
+                user?.Books.Add(book);
+                db.SaveChanges();
+
+                return Results.Ok();
+            })
+            .RequireAuthorization();
+
+        
         app.MapGet("/about/{text}/{number}", ([FromQuery]string text, int number) => $"A site for code – {text} {number}");
 
         app.MapGet("/", () => "Hello World!");
