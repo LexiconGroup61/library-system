@@ -148,7 +148,7 @@ public static class WebApplicationExtensions
         app.MapGet("home/privacy", () =>
         {
             return "Privacy enabled";
-        }).RequireAuthorization();
+        }).AllowAnonymous();
     }
 
     public static void UseCustomMiddleware(this WebApplication app)
