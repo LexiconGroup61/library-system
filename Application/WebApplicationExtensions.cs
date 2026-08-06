@@ -132,8 +132,11 @@ public static class WebApplicationExtensions
 
                 var user = db.LibraryUsers
                     .SingleOrDefault(u => u.Id == userId);
-                    
-                user?.Books.Add(book);
+
+                PersonalBook newBook = new PersonalBook();
+                newBook.Book = book;
+                user?.Books.Add(newBook);
+                
                 db.SaveChanges();
 
                 return Results.Ok();
