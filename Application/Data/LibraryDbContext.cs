@@ -18,4 +18,5 @@ public class LibraryDbContext : IdentityDbContext<LibraryUser>
     public DbSet<Book> Books { get; set; }
     public DbSet<PublicationDate> PublicationDates { get; set; }
     public DbSet<LibraryUser> LibraryUsers { get; set; }
+    public DbSet<PersonalBook> PersonalBooks { get; set; }
 }

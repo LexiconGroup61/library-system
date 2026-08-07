@@ -5,6 +5,7 @@ using Application.Services.Interfaces;
 using Catalogue;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 
 namespace Application;
 
@@ -115,14 +116,18 @@ public static class WebApplicationExtensions
             {
                 var userId = manager.GetUserId(context.User);
 
-                var user = db.LibraryUsers
-                    .SingleOrDefault(u => u.Id == userId);
-                var books = user?.Books;
+                var books = db.PersonalBooks
+                    .Where(p => p.LibraryUserId == userId)
+                    .Select(p => new PersonalBookDto(
+                        p.Date, p.Creator, p.Publisher, p.Title))
+                    .ToList();
+      
+                
                 return Results.Ok(books);
             })
             .RequireAuthorization();
         app.MapPost("/addbook", (
-                [FromBody] Book book,
+                [FromBody] PersonalBookDto book,
                 LibraryDbContext db,
                 HttpContext context,
                 UserManager<LibraryUser> manager
@@ -130,13 +135,10 @@ public static class WebApplicationExtensions
             {
                 var userId = manager.GetUserId(context.User);
 
-                var user = db.LibraryUsers
-                    .SingleOrDefault(u => u.Id == userId);
-
-                PersonalBook newBook = new PersonalBook();
-                newBook.Book = book;
-                user?.Books.Add(newBook);
+                PersonalBook newBook = new PersonalBook(book);
+                newBook.LibraryUserId = userId;
                 
+                db.PersonalBooks.Add(newBook);
                 db.SaveChanges();
 
                 return Results.Ok();
@@ -151,7 +153,7 @@ public static class WebApplicationExtensions
         app.MapGet("home/privacy", () =>
         {
             return "Privacy enabled";
-        }).AllowAnonymous();
+        }).RequireAuthorization();
     }
 
     public static void UseCustomMiddleware(this WebApplication app)

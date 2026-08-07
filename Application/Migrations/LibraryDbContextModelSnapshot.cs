@@ -43,7 +43,6 @@ namespace Application.Migrations
                         .HasColumnType("TEXT");
 
                     b.Property<string>("NickName")
-                        .IsRequired()
                         .HasColumnType("TEXT");
 
                     b.Property<string>("NormalizedEmail")
@@ -91,20 +90,31 @@ namespace Application.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("INTEGER");
 
-                    b.Property<int>("BookId")
-                        .HasColumnType("INTEGER");
+                    b.Property<string>("Creator")
+                        .IsRequired()
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("Date")
+                        .IsRequired()
+                        .HasColumnType("TEXT");
 
                     b.Property<string>("LibraryUserId")
                         .IsRequired()
                         .HasColumnType("TEXT");
 
-                    b.HasKey("Id");
+                    b.Property<string>("Publisher")
+                        .IsRequired()
+                        .HasColumnType("TEXT");
 
-                    b.HasIndex("BookId");
+                    b.Property<string>("Title")
+                        .IsRequired()
+                        .HasColumnType("TEXT");
+
+                    b.HasKey("Id");
 
                     b.HasIndex("LibraryUserId");
 
-                    b.ToTable("PersonalBook");
+                    b.ToTable("PersonalBooks");
                 });
 
             modelBuilder.Entity("AuthorBook", b =>
@@ -355,19 +365,11 @@ namespace Application.Migrations
 
             modelBuilder.Entity("Application.Models.PersonalBook", b =>
                 {
-                    b.HasOne("Catalogue.Book", "Book")
-                        .WithMany()
-                        .HasForeignKey("BookId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
                     b.HasOne("Application.Models.LibraryUser", "User")
                         .WithMany("Books")
                         .HasForeignKey("LibraryUserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
-
-                    b.Navigation("Book");
 
                     b.Navigation("User");
                 });

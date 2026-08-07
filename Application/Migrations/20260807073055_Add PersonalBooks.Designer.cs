@@ -11,8 +11,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Application.Migrations
 {
     [DbContext(typeof(LibraryDbContext))]
-    [Migration("20260729071245_Extend IdentityUser")]
-    partial class ExtendIdentityUser
+    [Migration("20260807073055_Add PersonalBooks")]
+    partial class AddPersonalBooks
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -46,7 +46,6 @@ namespace Application.Migrations
                         .HasColumnType("TEXT");
 
                     b.Property<string>("NickName")
-                        .IsRequired()
                         .HasColumnType("TEXT");
 
                     b.Property<string>("NormalizedEmail")
@@ -86,6 +85,39 @@ namespace Application.Migrations
                         .HasDatabaseName("UserNameIndex");
 
                     b.ToTable("AspNetUsers", (string)null);
+                });
+
+            modelBuilder.Entity("Application.Models.PersonalBook", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("INTEGER");
+
+                    b.Property<string>("Creator")
+                        .IsRequired()
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("Date")
+                        .IsRequired()
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("LibraryUserId")
+                        .IsRequired()
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("Publisher")
+                        .IsRequired()
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("Title")
+                        .IsRequired()
+                        .HasColumnType("TEXT");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("LibraryUserId");
+
+                    b.ToTable("PersonalBooks");
                 });
 
             modelBuilder.Entity("AuthorBook", b =>
@@ -334,6 +366,17 @@ namespace Application.Migrations
                     b.ToTable("AspNetUserTokens", (string)null);
                 });
 
+            modelBuilder.Entity("Application.Models.PersonalBook", b =>
+                {
+                    b.HasOne("Application.Models.LibraryUser", "User")
+                        .WithMany("Books")
+                        .HasForeignKey("LibraryUserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("User");
+                });
+
             modelBuilder.Entity("AuthorBook", b =>
                 {
                     b.HasOne("Catalogue.Author", null)
@@ -424,6 +467,11 @@ namespace Application.Migrations
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+                });
+
+            modelBuilder.Entity("Application.Models.LibraryUser", b =>
+                {
+                    b.Navigation("Books");
                 });
 
             modelBuilder.Entity("Catalogue.Author", b =>
